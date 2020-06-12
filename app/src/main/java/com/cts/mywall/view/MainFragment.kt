@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,13 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cts.myconnectsapp.adapters.MyWallAdapter
 import com.cts.mywall.R
-import com.cts.mywall.entity.WallModelJson
+import com.cts.mywall.databinding.FragmentMainBinding
 import com.cts.mywall.viewmodel.WallViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
+import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -27,36 +26,41 @@ import kotlin.coroutines.CoroutineContext
  */
 class MainFragment : Fragment(){
     lateinit var viewModel: WallViewModel
-    lateinit private var adapter: MyWallAdapter
-    var recyclerView: RecyclerView? = null
-    var viewInstance: View? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    private lateinit var adapter: MyWallAdapter
+    private lateinit var mainBinding : FragmentMainBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        viewInstance = inflater.inflate(R.layout.fragment_main, container, false)
-        recyclerView = viewInstance?.findViewById<RecyclerView>(R.id.recycler)
-        return viewInstance    }
+        mainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
+        mainBinding.lifecycleOwner = viewLifecycleOwner
+        return mainBinding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider.AndroidViewModelFactory.
         getInstance(activity!!.application).create(WallViewModel::class.java)
-        val linearLayoutManager = LinearLayoutManager(this.context)
-        recyclerView?.layoutManager = linearLayoutManager
 
-        viewModel.getMyWallData().wallList.observe(this, Observer{ data ->
-            adapter =  MyWallAdapter(data, activity!!)
-            recyclerView?.adapter = adapter
+        showProgress()
+        viewModel.getMyWallData().observe(this, Observer{ data ->
+
+            recycler.also {
+                it.layoutManager = LinearLayoutManager(requireContext())
+                it.adapter = MyWallAdapter(data, requireActivity())
+            }
+
+            hideProgress()
             Log.d("APP", "Observer Live data called")
         })
+    }
+    fun showProgress(){
+        mainBinding.progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgress() {
+        mainBinding.progressBar.visibility = View.INVISIBLE
     }
 
     companion object {

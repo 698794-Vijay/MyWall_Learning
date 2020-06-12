@@ -1,9 +1,7 @@
 package com.cts.mywall.model
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.cts.mywall.entity.WallModelJson
+import com.cts.mywall.entity.WallItem
 import com.cts.mywall.entity.WallReactionsJson
 import com.cts.mywall.services.ConnectsAPI
 import com.cts.mywall.services.ServiceBuilder
@@ -15,25 +13,25 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class WallList() {
-    val wallList = MutableLiveData<ArrayList<WallModelJson>>()
+    private val wallList = MutableLiveData<ArrayList<WallItem>>()
 
     init {
         fetchWallData()
     }
 
-    private suspend fun fetchWallDataFromAPI(): ArrayList<WallModelJson>? =
+    private suspend fun fetchWallDataFromAPI(): ArrayList<WallItem>? =
 
         suspendCoroutine { continuation ->
             val request = ServiceBuilder.buildService(ConnectsAPI::class.java)
             val call = request.getMyWallData()
-            call.enqueue(object : Callback<ArrayList<WallModelJson>> {
-                override fun onFailure(call: Call<ArrayList<WallModelJson>>, t: Throwable) {
+            call.enqueue(object : Callback<ArrayList<WallItem>> {
+                override fun onFailure(call: Call<ArrayList<WallItem>>, t: Throwable) {
                     continuation.resume(null)
                 }
 
                 override fun onResponse(
-                    call: Call<ArrayList<WallModelJson>>,
-                    response: Response<ArrayList<WallModelJson>>
+                    call: Call<ArrayList<WallItem>>,
+                    response: Response<ArrayList<WallItem>>
                 ) {
                     continuation.resume(response.body())
                 }
@@ -58,7 +56,7 @@ class WallList() {
             })
         }
 
-    fun getUsers(): LiveData<ArrayList<WallModelJson>> {
+    fun getUsers(): MutableLiveData<ArrayList<WallItem>> {
         return wallList
     }
 
