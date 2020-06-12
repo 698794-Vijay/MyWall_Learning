@@ -14,32 +14,12 @@ import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class WallList(var items: ArrayList<WallModelJson>) {
-    constructor() : this(ArrayList())
+class WallList() {
     val wallList = MutableLiveData<ArrayList<WallModelJson>>()
 
     init {
         fetchWallData()
     }
-
-//    suspend fun getWallList() {
-//
-//        val result = getData()
-//        withContext(Dispatchers.Main) {
-//            items.addAll(result)
-//        }
-//    }
-
-//    suspend fun getData(): ArrayList<WallModelJson> {
-//        return withContext(Dispatchers.Default) {
-//            val request = ServiceBuilder.buildService(ConnectsAPI::class.java)
-//            val call = request.getMyWallData()
-//            var response = call.execute()
-//            Log.d("App", "Wall API Response: ${response.body()!!}")
-//            return@withContext response.body()!!
-//        }
-//    }
-
 
     private suspend fun fetchWallDataFromAPI(): ArrayList<WallModelJson>? =
 
@@ -92,12 +72,10 @@ class WallList(var items: ArrayList<WallModelJson>) {
             wallData.let { data ->
                 data?.forEach{
                     it.reaction = wallReactions?.filter { x -> x.feed_id == it.id }?.first()
-                    items.add(it)
                 }
             }
 
            wallList.postValue(wallData)
         }
-
     }
 }

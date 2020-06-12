@@ -1,10 +1,12 @@
 package com.cts.mywall.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,13 +25,8 @@ import kotlin.coroutines.CoroutineContext
  * Use the [MainFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MainFragment : Fragment() , CoroutineScope{
+class MainFragment : Fragment(){
     lateinit var viewModel: WallViewModel
-    private var profileList: ArrayList<WallModelJson>? = null
-    private var job: Job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
     lateinit private var adapter: MyWallAdapter
     var recyclerView: RecyclerView? = null
     var viewInstance: View? = null
@@ -55,26 +52,11 @@ class MainFragment : Fragment() , CoroutineScope{
         val linearLayoutManager = LinearLayoutManager(this.context)
         recyclerView?.layoutManager = linearLayoutManager
 
-        //launch {
-
-        profileList = viewModel.getMyWallData().items
-
-//            val result =  callGetApi()
-//            onResult(result) // onResult is called on the main thread
-       // }
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        profileList = viewModel.getMyWallData().items
-        adapter =  MyWallAdapter(profileList!!, activity!!)
-        recyclerView!!.adapter = adapter
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
+        viewModel.getMyWallData().wallList.observe(this, Observer{ data ->
+            adapter =  MyWallAdapter(data, activity!!)
+            recyclerView?.adapter = adapter
+            Log.d("APP", "Observer Live data called")
+        })
     }
 
     companion object {

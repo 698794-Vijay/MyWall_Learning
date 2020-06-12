@@ -21,6 +21,8 @@ class MyWallAdapter(val profiles: ArrayList<WallModelJson>, context: Activity) :
     private val viewTypeText = 2
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+
         if (viewType == 1)
             return MyWallViewHolder(
                 LayoutInflater.from(parent.context)
