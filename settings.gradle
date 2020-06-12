@@ -1,0 +1,2 @@
+rootProject.name='MyWall'
+include ':app'
