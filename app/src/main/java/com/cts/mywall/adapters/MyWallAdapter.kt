@@ -16,7 +16,7 @@ import com.cts.mywall.databinding.WallTextCardBinding
 import com.cts.mywall.entity.WallItem
 
 
-class MyWallAdapter(val profiles: ArrayList<WallItem>, context: Activity) :
+class MyWallAdapter(var wallItemsList: ArrayList<WallItem>, context: Activity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val activity: Activity? = context
 
@@ -33,35 +33,24 @@ class MyWallAdapter(val profiles: ArrayList<WallItem>, context: Activity) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (profiles[position].postType  == "image") {
-            (holder as MyWallImageViewHolder).wallImageCardBinding.viewModel = profiles[position]
+        if (wallItemsList[position].postType  == "image") {
+            (holder as MyWallImageViewHolder).wallImageCardBinding.viewModel = wallItemsList[position]
         } else {
-            (holder as MyWallTextViewHolder).walltextCardBinding.viewModel = profiles[position]
+            (holder as MyWallTextViewHolder).walltextCardBinding.viewModel = wallItemsList[position]
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (profiles[position].postType == "image") viewTypeImage else viewTypeText
+        return if (wallItemsList[position].postType == "image") viewTypeImage else viewTypeText
     }
 
     override fun getItemCount(): Int {
-        return profiles.size
+        return wallItemsList.size
     }
 
 
     inner class MyWallImageViewHolder(val wallImageCardBinding: WallImageCardBinding):RecyclerView.ViewHolder(wallImageCardBinding.root)
     inner class MyWallTextViewHolder(val walltextCardBinding: WallTextCardBinding):RecyclerView.ViewHolder(walltextCardBinding.root)
-
-
-
-
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        if (profiles[position].postType  == "image") { // put your condition, according to your requirements
-//            (holder as MyWallViewHolder1).bind(position)
-//        } else {
-//            (holder as WallTextViewHolder1).bind(position)
-//        }
-//    }
 
 
     private inner class MyWallViewHolder1(itemView: View, context: Activity?) : RecyclerView.ViewHolder(itemView) {
@@ -83,7 +72,7 @@ class MyWallAdapter(val profiles: ArrayList<WallItem>, context: Activity) :
 
         fun bind(position: Int) {
 
-            val wallItem = profiles[position]
+            val wallItem = wallItemsList[position]
                 Glide.with(itemView.context).load(wallItem.profile_pic).into(photo)
             Glide.with(itemView.context).load(wallItem.imageUrl).into(wall)
 
@@ -116,7 +105,7 @@ class MyWallAdapter(val profiles: ArrayList<WallItem>, context: Activity) :
 
 
         fun bind(position: Int) {
-            val wallItem = profiles[position]
+            val wallItem = wallItemsList[position]
             val options: RequestOptions = RequestOptions()
                 .centerCrop()
                 .error(R.mipmap.ic_launcher)

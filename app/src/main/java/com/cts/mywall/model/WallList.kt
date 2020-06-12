@@ -56,7 +56,7 @@ class WallList() {
             })
         }
 
-    fun getUsers(): MutableLiveData<ArrayList<WallItem>> {
+    fun getMyWalls(): MutableLiveData<ArrayList<WallItem>> {
         return wallList
     }
 
@@ -69,7 +69,8 @@ class WallList() {
             val wallReactions = wallReactionsResponse.await()
             wallData.let { data ->
                 data?.forEach{
-                    it.reaction = wallReactions?.filter { x -> x.feed_id == it.id }?.first()
+                    it.color = "#0B91FF"
+                    it.reaction = wallReactions?.first { x -> x.feed_id == it.id }
                 }
             }
 

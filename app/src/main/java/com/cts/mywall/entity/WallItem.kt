@@ -11,5 +11,6 @@ data class WallItem (
     @SerializedName("postType") val postType : String,
     @SerializedName("message") val message : String,
     @SerializedName("imageUrl") val imageUrl : String,
-    var reaction: WallReactionsJson?
+    var reaction: WallReactionsJson?,
+    var color: String
 )
