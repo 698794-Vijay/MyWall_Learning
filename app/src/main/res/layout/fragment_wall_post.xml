@@ -6,51 +6,54 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainFragment">
+        tools:context=".view.WallPostFragment">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextColor="@android:color/white"
-            android:background="#0B91FF"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorBlue"
+            android:minHeight="?attr/actionBarSize"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@android:color/white">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:text="@string/actionbar_title"/>
+                    android:text="@string/actionbar_title"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/dimen_18sp"
+                    android:textStyle="bold" />
+
                 <Spinner
                     android:id="@+id/action_bar_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:gravity="end"
-                    android:theme="@style/spinnerTheme"
-                    android:textAlignment="textEnd"
-                    android:layout_alignParentRight="true" />
+                    android:textAlignment="viewEnd"
+                    android:theme="@style/spinnerTheme" />
             </RelativeLayout>
 
 
         </androidx.appcompat.widget.Toolbar>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dimen_0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_default="spread"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -59,7 +62,7 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             android:indeterminateBehavior="repeat"
-            android:scaleY="3"
+            android:scaleY="@dimen/scaleY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
