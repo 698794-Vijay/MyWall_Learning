@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cts.mywall.databinding.WallImageCardBinding
 import com.cts.mywall.databinding.WallTextCardBinding
-import com.cts.mywall.entity.WallItem
+import com.cts.mywall.model.WallItem
 import com.cts.mywall.util.Constants
 
 

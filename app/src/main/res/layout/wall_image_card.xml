@@ -6,7 +6,7 @@
 
         <variable
             name="postItemModel"
-            type="com.cts.mywall.entity.WallItem" />
+            type="com.cts.mywall.model.WallItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -173,7 +173,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1dp"
-            android:background="@color/colorLightGray"
+            android:background="@color/colorGray"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

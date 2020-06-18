@@ -47,7 +47,7 @@ class WallPostFragment : Fragment(), AdapterView.OnItemSelectedListener {
         super.onViewCreated(view, savedInstanceState)
 
         postItemViewModel =
-            ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
                 .create(PostItemViewModel::class.java)
 
         showProgress()

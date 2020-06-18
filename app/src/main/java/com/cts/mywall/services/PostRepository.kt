@@ -1,10 +1,8 @@
-package com.cts.mywall.model
+package com.cts.mywall.services
 
 import androidx.lifecycle.MutableLiveData
-import com.cts.mywall.entity.WallItem
-import com.cts.mywall.entity.PostReaction
-import com.cts.mywall.services.WallPostAPI
-import com.cts.mywall.services.ServiceBuilder
+import com.cts.mywall.model.WallItem
+import com.cts.mywall.model.PostReaction
 import com.cts.mywall.util.Constants
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -13,7 +11,7 @@ import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class WallPostList() {
+class PostRepository() {
     private val wallList = MutableLiveData<ArrayList<WallItem>>()
 
     init {
@@ -57,7 +55,7 @@ class WallPostList() {
             })
         }
 
-    fun getMyWalls(): MutableLiveData<ArrayList<WallItem>> {
+    fun getMyWallPosts(): MutableLiveData<ArrayList<WallItem>> {
         return wallList
     }
 

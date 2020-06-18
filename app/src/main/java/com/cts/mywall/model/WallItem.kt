@@ -1,5 +1,6 @@
-package com.cts.mywall.entity
+package com.cts.mywall.model
 
+import com.cts.mywall.model.PostReaction
 import com.google.gson.annotations.SerializedName
 
 data class WallItem(

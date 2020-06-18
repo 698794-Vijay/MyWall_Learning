@@ -1,4 +1,4 @@
-package com.cts.mywall.entity
+package com.cts.mywall.model
 
 import com.google.gson.annotations.SerializedName
 
